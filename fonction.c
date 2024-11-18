@@ -58,22 +58,22 @@ int changement(int liste[64],int cp, int couleur){
   int ennemie;
   if (couleur== blanc )ennemie=noir;
       else  ennemie = blanc;
-  if (liste[cp]!= vide){
-      printf("le coup est invalide, case non vide");
+  if ((liste[cp] != vide)||(cp>63)||(cp<0)){
+      printf("coup invalide, case non vide\n");
       return 0;
   }
-
   // Calcul du nombre de pion à changer
   for (i=-1; i <= 1;i++){
       for (j=-1;j<= 1;j++){
           v = j+i*8;
           d=1;
-          while ((liste[cp+d*v]==ennemie) && ((cp+d*v>=0) &&  (cp+d*v<=64)) && ( j*((cp+d*v)%8) <= j*((cp+(d+1)*v) % 8))) {
+          if (cp+v&& ( j*((cp)%8) <= j*((cp+1*v) % 8)))
+          while ((liste[cp+d*v]==ennemie) && ((cp+d*v>=0) &&  (cp+d*v<=64)) && ( j*((cp+d*v)%8) <= j*((cp+(d+1)*v) % 8)) ) {
               d++;
           }
   //changment des pions
         
-          if (( liste[cp+d*v]==ami) && (d>1)){
+          if (( liste[cp+d*v]==ami) && (d>1) && ((cp+d*v)>=0) && ((cp+d*v)<64)){
               ch=1;
               for (int n=0; n < d; n++){
                   liste[cp+n*v] =ami;
@@ -81,7 +81,7 @@ int changement(int liste[64],int cp, int couleur){
           }
       }
   }
-  if (ch == 0) printf("coup non valide, pas de pions adverse adj\n");
+  if (ch == 0) printf("coup invalide, pas de pions adverse adj\n");
   return ch;
 }
 
@@ -113,4 +113,26 @@ int Peutjouer(int liste[64], int couleur){
     return 0;
 }
 
-
+int calculScore (int liste[64], int *sB, int *sN){
+    int i;
+    for (i=0;i<64;i++){
+        if (liste[i] == blanc){
+            (*sB)++;
+        }
+        if (liste[i] == noir){
+            (*sN)++;
+        }
+    }
+    if (*sN > *sB){
+        printf("Victoire des pions noirs ! (%d pions)\n", *sN);
+        return 2;
+    }
+    else if (*sN < *sB){
+        printf("Victoire des pions blancs ! (%d pions)\n", *sB);
+        return 1;
+    }
+    else{
+        printf("Match nul \n");
+        return 0;
+    }
+}

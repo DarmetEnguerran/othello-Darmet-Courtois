@@ -7,6 +7,7 @@
 int main(){
    int n;
    int cp;
+   int *scoreB =0, *scoreN =0;
    int TableauCouleur[2]={blanc,noir};
    int couleur=1;
    afficherPlateau(plateau);
@@ -15,20 +16,21 @@ int main(){
        scanf("%d",&n);
        cp=((n%10)-1)+((n/10)-1)*8;
        while( changement(plateau, cp, TableauCouleur[couleur]) != 1){
-           printf("rejouez\n");
+           printf("\nrejouez\n");
            scanf("%d",&n);
            cp=((n%10)-1)+((n/10)-1)*8;
        }
        afficherPlateau(plateau);
      
-       if (Peutjouer(plateau,(couleur+1)%2)){
+       if (Peutjouer(plateau,TableauCouleur[(couleur+1)%2])){
            couleur = (couleur+1)%2;
        }
-       else if (Peutjouer(plateau,(couleur))){
+       else if (Peutjouer(plateau,TableauCouleur[couleur])){
            printf("Aucun coup valide pour %d\n", TableauCouleur[(couleur+1)%2]);
        }
        else {
-           printf("Partie terminer");
+           printf("Partie terminée\n");
+           calculScore(plateau, &scoreB, &scoreN);
           return 1;
        }
       
