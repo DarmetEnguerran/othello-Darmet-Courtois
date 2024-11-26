@@ -4,7 +4,7 @@ main : main.o fonction.o
 	gcc $^ -o $@ $(ti)
 
 main.o: main.c fonction.h
-	gcc -c $< -o $@ $(ti)ls
+	gcc -c $< -o $@ $(ti)
 
 test : test.c fonction.o
 	gcc -o $@ $^

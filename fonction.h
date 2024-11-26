@@ -3,9 +3,9 @@
 #include <math.h>
 
 
-#define noir 2
-#define blanc 1
-#define vide 0
+#define noir 1
+#define blanc 0
+#define vide 2
 
 
 extern int plateau[64];

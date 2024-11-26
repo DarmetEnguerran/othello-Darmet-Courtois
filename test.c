@@ -14,9 +14,9 @@
 typedef int8_t monType ;
 #else 
 typedef int monType;
-#define MYBLACK 2 
-#define MYWHITE 1 
-#define MYEMPTY 0 
+#define MYBLACK 1 
+#define MYWHITE 0 
+#define MYEMPTY 2 
 #endif 
 
 
