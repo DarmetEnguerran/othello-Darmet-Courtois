@@ -7,7 +7,7 @@
 int main(){
    int n;
    int cp;
-   int *scoreB =0, *scoreN =0;
+   int scoreB =0, scoreN =0;
    int TableauCouleur[2]={blanc,noir};
    int couleur=1;
    afficherPlateau(plateau);

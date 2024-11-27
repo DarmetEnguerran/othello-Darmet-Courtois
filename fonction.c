@@ -7,8 +7,8 @@ extern int plateau[64]=
                 {vide,vide,vide,vide,vide,vide,vide,vide,
                 vide,vide,vide,vide,vide,vide,vide,vide,
                 vide,vide,vide,vide,vide,vide,vide,vide,
-                vide,vide,vide,noir,blanc,vide,vide,vide,
                 vide,vide,vide,blanc,noir,vide,vide,vide,
+                vide,vide,vide,noir,blanc,vide,vide,vide,
                 vide,vide,vide,vide,vide,vide,vide,vide,
                 vide,vide,vide,vide,vide,vide,vide,vide,
                 vide,vide,vide,vide,vide,vide,vide,vide,};
@@ -20,14 +20,13 @@ void afficherPlateau(int liste[64])
     printf("      ");
     for (j =0; j<8; j++)    { printf("-%d- ",(j+1));}
     printf("\n");
-    for (i =0; i<63; i++)
+    for (i =0; i<64; i++)
     {  
         if(i%8 == 0)        { printf("-%d-  ",(i/8)+1);}       
         if(liste[i]!=vide)  { printf("| %d ", liste[i]);}
         else                {printf("|   ");}
         if (i%8 == 7)       { printf("| \n\n");}
     }
-    printf("| %d |\n ", liste[63]);
     for (j =0; j<8; j++)    { printf("--- ");}
     printf("\n");
 }
