@@ -4,20 +4,21 @@
 #include "fonction.h"
 #include "fartif.h"
 
-extern int Vtriangle[10]; {10, 1, 7, 5, 
+extern int Vtriangle[10]= {10, 1, 7, 5, 
                               0, 3, 2,
                                  5, 4,
-                                     1}
+                                     1};
 
 void completeVP(int ValeurListe[64], int triangle[10]){
-    ValeurListe[64]={triangle[0],triangle[1],triangle[2],triangle[3],triangle[3],triangle[2],triangle[1],triangle[0],
-                        triangle[1],triangle[4],triangle[5],triangle[6],triangle[6],triangle[5],triangle[4],triangle[1],
-                        triangle[2],triangle[5],triangle[7],triangle[8],triangle[8],triangle[7],triangle[5],triangle[2],
-                        triangle[3],triangle[6],triangle[8],triangle[9],triangle[9],triangle[8],triangle[6],triangle[3],
-                        triangle[3],triangle[6],triangle[8],triangle[9],triangle[9],triangle[8],triangle[6],triangle[3],
-                        triangle[2],triangle[5],triangle[7],triangle[8],triangle[8],triangle[7],triangle[5],triangle[2],
-                        triangle[1],triangle[4],triangle[5],triangle[6],triangle[6],triangle[5],triangle[4],triangle[1],
-                        triangle[0],triangle[1],triangle[2],triangle[3],triangle[3],triangle[2],triangle[1],triangle[0],}
+    ValeurListe[64]= {  Vtriangle[0],Vtriangle[1],Vtriangle[2],Vtriangle[3],Vtriangle[3],Vtriangle[2],Vtriangle[1],Vtriangle[0],
+                        Vtriangle[1],Vtriangle[4],Vtriangle[5],Vtriangle[6],Vtriangle[6],Vtriangle[5],Vtriangle[4],Vtriangle[1],
+                        Vtriangle[2],Vtriangle[5],Vtriangle[7],Vtriangle[8],Vtriangle[8],Vtriangle[7],Vtriangle[5],Vtriangle[2],
+                        Vtriangle[3],Vtriangle[6],Vtriangle[8],Vtriangle[9],Vtriangle[9],Vtriangle[8],Vtriangle[6],Vtriangle[3],
+                        Vtriangle[3],Vtriangle[6],Vtriangle[8],Vtriangle[9],Vtriangle[9],Vtriangle[8],Vtriangle[6],Vtriangle[3],
+                        Vtriangle[2],Vtriangle[5],Vtriangle[7],Vtriangle[8],Vtriangle[8],Vtriangle[7],Vtriangle[5],Vtriangle[2],
+                        Vtriangle[1],Vtriangle[4],Vtriangle[5],Vtriangle[6],Vtriangle[6],Vtriangle[5],Vtriangle[4],Vtriangle[1],
+                        Vtriangle[0],Vtriangle[1],Vtriangle[2],Vtriangle[3],Vtriangle[3],Vtriangle[2],Vtriangle[1],Vtriangle[0]};
+
 }
 
 
@@ -36,27 +37,24 @@ int calculPresScore(int liste[64], int ValeurListe[64],int couleur){
 
 int MinMax(int liste[64], int valeurListe[64], int couleur, int profondeur){
     int mcp=64;
-    int listeScore[64]={0};
-    int *fplateau[64];
+    int vMcp=-1000;
+    int concurant_vMcp;
+    int **fplateau;  //tableau de taille 64
     if (!(profondeur)){
         return calculPresScore;
     }
     else{
         for (int i=0; i<64; i++){
-            if (Peutjouer(vl->liste, i, couleur)){
-                fplateau=maloc(sizeof(int)*64);
-                changement(*fplateau, i, couleur);
-                listeScore[i]= (-1)*MinMax(*fplateau, valeurListe, not(couleur),profondeur-1);
-                free (fplateau);
+            fplateau = maloc(sizeof(int)*64);
+            if (changement(*fplateau, i, couleur)){
+                concurant_vMcp=(-1)*MinMax(*fplateau, valeurListe, not(couleur),profondeur-1);
+                if (vMcp < concurant_vMcp){
+                    vMcp=concurant_vMcp;
+                    mcp=i;
+                }
             }
-            else{
-                listeScore[i]=-1000;
-            }
+            free (fplateau);
         }
-        return max(listeScore);
+        return vMcp;    
     }
-
-
-
-    
 }
