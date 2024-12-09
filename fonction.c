@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <math.h>
 #include "fonction.h"
 
@@ -42,12 +43,12 @@ int changement(int liste[64],int cp, int couleur){
     if (couleur== blanc )ennemie=noir;
         else  ennemie = blanc;
     if ( (liste[cp] != vide) || ((cp>64)||(cp<0)) ){
-        printf("coup invalide, case non vide\n");
+        //printf("coup invalide, case non vide\n");
         return 0;
     }
     if (cp==64){
-        printf("%d passe son tour", couleur);
-        return 0;
+        //printf("%d passe son tour", couleur);
+        return 1;
     }
   
     // Calcul du nombre de pion à changer
@@ -68,7 +69,7 @@ int changement(int liste[64],int cp, int couleur){
             }
         }
     }
-    if (ch == 0) printf("coup invalide, pas de pions adverse adj\n");
+    //if (ch == 0) printf("coup invalide, pas de pions adverse adj\n");
     return ch;
 }
 
@@ -111,15 +112,15 @@ int calculScore (int liste[64], int *sB, int *sN){
         }
     }
     if (*sN > *sB){
-        printf("Victoire des pions noirs ! (%d pions)\n", *sN);
-        return 2;
-    }
-    else if (*sN < *sB){
-        printf("Victoire des pions blancs ! (%d pions)\n", *sB);
+        //printf("Victoire des pions noirs ! (%d pions)\n", *sN);
         return 1;
     }
-    else{
-        printf("Match nul \n");
+    else if (*sN < *sB){
+        //printf("Victoire des pions blancs ! (%d pions)\n", *sB);
         return 0;
+    }
+    else{
+        //printf("Match nul \n");
+        return 2;
     }
 }

@@ -1,10 +1,10 @@
-#include <stdlib.h> 
 #include <stdio.h>
-#include <stdlib.h> 
-#include <string.h> 
-#include "userNetwork.h" 
-
-#define BLACK 1 
+#include <stdbool.h>
+#include <stdlib.h>
+#include <math.h>
+#include "fartif.h"
+#include "userNetwork.h"
+#include "fonction.h" 
 
 int main(int argc,char *argv[]) 
 {
@@ -27,29 +27,43 @@ int main(int argc,char *argv[])
 		fprintf(stderr,"error Starting Game\n"); 
 		return (EXIT_FAILURE); 
 	}
-	printf("I am player %s\n",(g->myColor==BLACK)?"Black":"White"); 
+	printf("I am player %s\n",(g->myColor==noir)?"Black":"White");
+
+    afficherPlateau(plateau); 
 
 	// debut de partie
+    int couleurCurrent= noir ;
+    int cp; 
+    int profondeur =5;
+    int valeurPlateau[64];
+
+
 	while (g->state == PLAYING && !feof(stdin)) {
 	 	if (g->myColor != g->currentPlayer) { // attente du coup de l'adversaire 
 			if ((move=waitMoveOthello(g)) == 0 ) {
 				printf("Game status %d: \t",g->state); 
 				if (g->state == PLAYING) { 
-					printf("Received move from server %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8); 
+					printf("Received move from server %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8);
+                    changement(plateau, g->move, g->currentPlayer);
+                    afficherPlateau(plateau); 
 				}
 			}
 		}
 	 	else { 		
 			g->move=65; // si scanf correct cette valeur est modifiée, sinon cela terminera la partie. 
-			// recuperation du coup sur stdin 
-			printf("Enter your move:\n");
-			scanf("%d",&(g->move)); 
-			printf("playing move %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8);
+            // recuperation du coup sur stdin 
+            int mcp=64;
+            printf("valeur plateau: %d\n",MinMax(plateau, valeurPlateau, g->myColor, profondeur,&mcp));
+            printf("Valeur mcp = %d,%d\n", mcp/8+1,mcp%8+1);
+            g->move=mcp;
+            changement(plateau,mcp,g->myColor);
+            afficherPlateau(plateau); 
 			doMoveOthello(g);	// envoie du coup à l'adversaire 
 	   	}
 		g->currentPlayer=!g->currentPlayer; 
 	} 
-	// fin de partie 
+	// fin de partie
+    printf("notre couleur : %d ",g->myColor);
 	printf("Final game status = %d\n",g->state); 
 	freeGameOthello(g);
 	return 0; 
