@@ -42,45 +42,46 @@ int calculPresScore(int liste[64], int ValeurListe[64],int couleur){
 int MinMax(int liste[64], int valeurListe[64], int couleur, int profondeur, int *mcp){
     int vMcp=-10000;
     int concurant_vMcp;
-    int *fplateau;  //tableau de taille 64
+
     int useless;
     if (!(profondeur)){
         return calculPresScore(liste,valeurListe,couleur);
     }
     else{
         for (int i=0; i<64; i++){
-            fplateau = malloc(sizeof(int)*64);
+            int fplateau [64];  
             for (int l=0; l<64; l++){
                 fplateau[l]=liste[l];
             }
             if (changement(fplateau, i, couleur)){
-                //afficherPlateau(liste);
                 
                 concurant_vMcp=(-1)*MinMax(fplateau, valeurListe, !(couleur),profondeur-1,&useless);
-                //printf("\n\n nouveau plateau appelé\n au degré %d \ncoup testé %d,%d \nvaleur du plateau %d\n\n", profondeur-1, i/8,i%8 ,concurant_vMcp);
-                //afficherPlateau(fplateau);
-
-                //printf("\n\n ------------------------------------------------------------------------------------------\n\n");
+                
                 if (vMcp < concurant_vMcp){
                     vMcp=concurant_vMcp;
                     *mcp=i;
-                }
+                };
             }
-            free (fplateau);
         }
         if (vMcp==-10000){
-            int useless1=0;
-            int useless2=0;
-            if(calculScore (liste, &useless1, &useless2) == couleur){
-                vMcp=1000;
+            if ((Peutjouer(liste, couleur))){
+                vMcp=-30;
             }
-            else if (calculScore (liste, &useless1, &useless2) != couleur){
-                vMcp=-1000;
-            }
+            
             else{
-                vMcp=0;
+                int useless1=0;
+                int useless2=0;
+                if(calculScore (liste, &useless1, &useless2) == couleur){
+                    vMcp=1000;
+                }
+                else if (calculScore (liste, &useless1, &useless2) != couleur){
+                    vMcp=-1000;
+                }
+                else{
+                    vMcp=0;
+                }
             }
         }
         return vMcp;    
-    }
+        }
 }
