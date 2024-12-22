@@ -1,3 +1,6 @@
+// COURTOIS Maxance
+// DARMET Enguerran
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -73,7 +76,8 @@ int changement(int liste[64],int cp, int couleur){
     return ch;
 }
 
-
+//fonction comme changement mais des qu'une case teste possede une direction possible
+//return 1.
 int Peutjouer(int liste[64], int couleur){
     int ami = couleur;
     int ennemie;
@@ -101,6 +105,7 @@ int Peutjouer(int liste[64], int couleur){
     return 0;
 }
 
+//compte les pionts noir et blanc de chaque joueur.
 int calculScore (int liste[64], int *sB, int *sN){
     int i;
     for (i=0;i<64;i++){
@@ -112,15 +117,15 @@ int calculScore (int liste[64], int *sB, int *sN){
         }
     }
     if (*sN > *sB){
-        //printf("Victoire des pions noirs ! (%d pions)\n", *sN);
+        printf("Victoire des pions noirs ! (%d pions)\n", *sN);
         return 1;
     }
     else if (*sN < *sB){
-        //printf("Victoire des pions blancs ! (%d pions)\n", *sB);
+        printf("Victoire des pions blancs ! (%d pions)\n", *sB);
         return 0;
     }
     else{
-        //printf("Match nul \n");
+        printf("Match nul \n");
         return 2;
     }
 }
